@@ -20,19 +20,19 @@ Użycie
 Wszystkie metody (których nazwy analogiczne są do funkcji z bilbioteki CLP) dostępne są z poziomu obiektu klasy PLP::
 
     from plp import PLP
-
     p = PLP()
 
 
-lub
+lub::
 
     p = PLP('/sciezka/inna/do/clp.so')
 
-Biblioteka przyjmuje jako tekstowe argumenty unicode oraz zwraca także unicode tam gdzie wymagane są napisy (przykrywa
- tym samym fakt, że CLP pracuje w kodowaniu ISO-8859-2).
+
+Biblioteka przyjmuje tekstowe argumenty typu ``unicode`` oraz zwraca także type ``unicode`` 
+tam gdzie wymagane są napisy (przykrywa tym samym fakt, że CLP pracuje wewnętrznie w kodowaniu ISO-8859-2).
 
 Typowe użycie modułu to próba identyfikacji napisu jako formy fleksyjnej konkretnego wyrazu słownika. Wyrazy słownika
-identyfikowane są za pomocą numeru integer za pomocą metody ``rec(forma)``.:
+identyfikowane są za pomocą liczby typu ``integer`` za pomocą metody ``rec(forma)``::
 
     >>> p.rec(u'żółwiem')
     [18660912]
@@ -40,7 +40,7 @@ identyfikowane są za pomocą numeru integer za pomocą metody ``rec(forma)``.:
     [18539600, 18539616, 18541616]
 
 Możliwe jest tez odpytanie się bilbioteki o wyraz z uwzględnieniem błędów typu polonica. Służy do tego metoda ``orec(forma)``
-(ogonkowy rec).:
+(ogonkowy rec)::
 
     >>> p.rec(u'zolwiem')
     []
@@ -53,7 +53,7 @@ Możliwe jest tez odpytanie się bilbioteki o wyraz z uwzględnieniem błędów 
 Zwracana jest lista identyfikatorów, ponieważ jeden napis moze odpowiadać wiecej niż jednemu elementowi słownika
 (element słownika stanowi jedna grupa fleksyjna).
 
-Następnie za pomocą ``bform(id)`` możemy odpytać się o formę podstawową wyrazu, znając jego identyfikator.:
+Następnie za pomocą ``bform(id)`` możemy odpytać się o formę podstawową wyrazu, znając jego identyfikator::
 
     >>> p.bform(18660912)
     u'\u017c\xf3\u0142w'
@@ -77,13 +77,12 @@ odmiany w postaci listy napisów::
     [u'pies', u'psa', u'psu', u'psem', u'psie', u'psy', u'ps\xf3w', u'psom', u'psami', u'psach']
 
 
-Metoda ``vec(id, forma)`` zwraca listę zawierającą pozycję wektora fleksyjnego na której występuje dla danego wyrazu dana forma::
+Metoda ``vec(id, forma)`` zwraca listę zawierającą pozycję wektora fleksyjnego na której występuje dla 
+danego wyrazu dana forma::
 
     >>> p.vec(17724032, u'psu')
     [3]
 
-.. warning::
-
-    Wektor odmiany liczony jest od 1 (a nie jak index listy od 0). Wynika to z konwencji lingiwstycznej w przyjętej w CLP.
+Uwaga: Wektor odmiany liczony jest od 1 (a nie jak index listy od 0). Wynika to z konwencji lingiwstycznej w przyjętej w CLP.
 
 
