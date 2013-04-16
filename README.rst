@@ -9,7 +9,7 @@ Instalacja
 
 Przy użyciu ``pip`` (najlepiej z virtualenv'a)::
 
-    $ pip install -e git+https://github.com/agh-glk/plp.git
+    $ pip install -e git+https://github.com/agh-glk/plp.git#egg=plp-dev
 
 
 Uwaga: moduł do działania wymaga posiadania licencjonowanej bilbioteki CLP w systemie.
