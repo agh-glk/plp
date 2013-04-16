@@ -2,10 +2,11 @@
 
 # Python CLP Wrapper
 # (c) Krzysztof Dorosz
-# 2008 AGH, dorosz@agh.edu.pl
+# 2008-2013 AGH, dorosz@agh.edu.pl
+
+from ctypes import c_int, CDLL, c_char_p, create_string_buffer, byref
 
 __VERSION__ = u'PLP 2.6'
-from ctypes import *
 
 Array50 = c_int * 50 # Typ pomocniczy dla buforow (tablic) int
 
