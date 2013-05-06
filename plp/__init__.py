@@ -1,1 +1,3 @@
-from plp import PLP
+# coding=utf-8
+
+from .plp import PLP

@@ -1,23 +1,26 @@
 PLP
 ===
 
-Wrapper dla Pythona biblioteki CLP (Polski słownik języka fleksyjnego)
+Wrapper dla Pythona 3 biblioteki CLP (Polski słownik języka fleksyjnego).
+
+Oryginalny wrapper dla Pythona 2 autorstwa Krzysztofa Dorosza <cypreess@gmail.com> dostępny jest pod adresem
+`github.com/kgadek/plpy3 <https://github.com/kgadek/plpy3>`_ . Port wykonany przez Konrada Gądka <kgadek@gmail.com>.
 
 
 Instalacja
 ----------
 
-Przy użyciu ``pip`` (najlepiej z virtualenv'a)::
+Przy użyciu ``pip`` (najlepiej z użyciem virtualenv)::
 
-    $ pip install -e git+https://github.com/agh-glk/plp.git#egg=plp-dev
+    $ pip install -e git+https://github.com/kgadek/plpy3.git#egg=plpy3
 
 
-Uwaga: moduł do działania wymaga posiadania licencjonowanej bilbioteki CLP w systemie.
+Uwaga: moduł do działania wymaga posiadania licencjonowanej biblioteki CLP w systemie.
 
 Użycie
 ------
 
-Wszystkie metody (których nazwy analogiczne są do funkcji z bilbioteki CLP) dostępne są z poziomu obiektu klasy PLP::
+Wszystkie metody (których nazwy analogiczne są do funkcji z biblioteki CLP) dostępne są z poziomu obiektu klasy PLP::
 
     from plp import PLP
     p = PLP()
@@ -34,39 +37,39 @@ tam gdzie wymagane są napisy (przykrywa tym samym fakt, że CLP pracuje wewnęt
 Typowe użycie modułu to próba identyfikacji napisu jako formy fleksyjnej konkretnego wyrazu słownika. Wyrazy słownika
 identyfikowane są za pomocą liczby typu ``integer`` za pomocą metody ``rec(forma)``::
 
-    >>> p.rec(u'żółwiem')
+    >>> p.rec('żółwiem')
     [18660912]
-    >>> p.rec(u'zamkowi')
+    >>> p.rec('zamkowi')
     [18539600, 18539616, 18541616]
 
-Możliwe jest tez odpytanie się bilbioteki o wyraz z uwzględnieniem błędów typu polonica. Służy do tego metoda ``orec(forma)``
+Możliwe jest tez odpytanie się biblioteki o wyraz z uwzględnieniem błędów typu polonica. Służy do tego metoda ``orec(forma)``
 (ogonkowy rec)::
 
-    >>> p.rec(u'zolwiem')
+    >>> p.rec('zolwiem')
     []
-    >>> p.orec(u'zolwiem')
+    >>> p.orec('zolwiem')
     [18660912]
-    >>> p.orec(u'żólwiem')
+    >>> p.orec('żólwiem')
     [18660912]
 
 
-Zwracana jest lista identyfikatorów, ponieważ jeden napis moze odpowiadać wiecej niż jednemu elementowi słownika
+Zwracana jest lista identyfikatorów, ponieważ jeden napis może odpowiadać więcej niż jednemu elementowi słownika
 (element słownika stanowi jedna grupa fleksyjna).
 
 Następnie za pomocą ``bform(id)`` możemy odpytać się o formę podstawową wyrazu, znając jego identyfikator::
 
     >>> p.bform(18660912)
-    u'\u017c\xf3\u0142w'
-    >>> print p.bform(18660912)
+    '\u017c\xf3\u0142w'
+    >>> print(p.bform(18660912))
     żółw
-    >>> map(lambda x: p.bform(x), p.rec(u'zamkowi'))
-    [u'zamek', u'zamek', u'zamkowy']
+    >>> [p.bform(x) for x in p.rec('zamkowi')]
+    ['zamek', 'zamek', 'zamkowy']
 
-Za pomocą metody ``label(id)`` można otrzymać etykiete gramatyczną wyrazu. Pierwsza litera etykiety koduje część mowy::
+Za pomocą metody ``label(id)`` można otrzymać etykietę gramatyczną wyrazu. Pierwsza litera etykiety koduje część mowy::
 
     >>> p.label(18660912)
-    u'ABAABA'
-    >>> p.label(18660912)[0] == plp.PLP.CZESCI_MOWY.RZECZOWNIK
+    'ABAABA'
+    >>> p.label(18660912)[0] == PLP.CZESCI_MOWY.RZECZOWNIK
     True
 
 Możliwe jest także uzyskanie informacji na temat wektora odmiany danego wyrazu. Metoda ``forms(id)`` zwraca wektor
@@ -74,15 +77,15 @@ odmiany w postaci listy napisów::
 
 
     >>> p.forms(17724032)
-    [u'pies', u'psa', u'psu', u'psem', u'psie', u'psy', u'ps\xf3w', u'psom', u'psami', u'psach']
+    ['pies', 'psa', 'ps', 'psem', 'psie', 'psy', 'ps\xf3w', 'psom', 'psami', 'psach']
 
 
 Metoda ``vec(id, forma)`` zwraca listę zawierającą pozycję wektora fleksyjnego na której występuje dla 
 danego wyrazu dana forma::
 
-    >>> p.vec(17724032, u'psu')
+    >>> p.vec(17724032, 'psu')
     [3]
 
-Uwaga: Wektor odmiany liczony jest od 1 (a nie jak index listy od 0). Wynika to z konwencji lingiwstycznej w przyjętej w CLP.
+Uwaga: Wektor odmiany liczony jest od 1 (a nie jak index listy od 0). Wynika to z konwencji lingwistycznej w przyjętej w CLP.
 
 
